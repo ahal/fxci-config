@@ -1,0 +1,35 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+---
+loader: taskgraph.loader.transform:loader
+
+kind-dependencies:
+  - tc-admin
+
+transforms:
+  - taskgraph.transforms.run:transforms
+  - taskgraph.transforms.task:transforms
+
+task-defaults:
+  run-on-tasks-for: []  # these tasks should only be triggered manually
+  run:
+    checkout: true
+    cwd: '{checkout}'
+    using: run-task
+  worker-type: t-linux
+  worker:
+    docker-image: {in-tree: python3.11}
+    max-run-time: 600
+
+tasks:
+  os-integration:
+    description: "Run Gecko os-integration tests"
+    dependencies:
+      apply: tc-admin-apply-staging
+    scopes:
+      - secrets:get:project/releng/fxci-config/taskcluster-stage-client
+    run:
+      command: >-
+        pip install --user -r requirements/test.txt &&
+        python taskcluster/scripts/schedule-tasks.py

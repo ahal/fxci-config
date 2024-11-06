@@ -23,7 +23,7 @@ tasks:
     apply-staging:
         description: "Run `tc-admin apply --envrionment=staging` to apply config to Taskcluster stage"
         scopes:
-          - secrets:get:project/releng/fxci-config/taskcluster-stage-client
+            - secrets:get:project/releng/fxci-config/taskcluster-stage-client
         run:
             command: >-
                 pip install --user -r requirements/base.txt &&
