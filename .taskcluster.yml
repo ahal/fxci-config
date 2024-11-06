@@ -271,6 +271,7 @@ tasks:
                                             --head-repository='${repoUrl}'
                                             --head-ref='${head_ref}'
                                             --head-rev='${head_sha}'
+                                            --target-tasks-method='os-integration'
                                             $${TRY_TASK_CONFIG_FILE+--try-task-config-file="$${TRY_TASK_CONFIG_FILE}"}
                                             ${extraArgs}
                           artifacts:
